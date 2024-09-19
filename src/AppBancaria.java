@@ -8,8 +8,18 @@ public class AppBancaria {
         double cash = 0;
         int opcion = 0;
 
+
         Scanner input = new Scanner(System.in);
 
+        String header = String.format("""
+                ********************************************
+                Datos del cliente
+                nombre : %s
+                Tipo de cuenta : %s
+                Saldo disponible: %.2f
+                ********************************************
+                """, cliente, tipoCuenta, credito);
+        System.out.println(header);
         while (opcion != 9){
             System.out.println("""
                     ** Escriba el numero de la opcion deseada **
@@ -26,9 +36,14 @@ public class AppBancaria {
              case 2:
                  System.out.println("¿Cuanto desea Retirar?");
                  cash = input.nextDouble();
-                 credito -= cash;
-                 System.out.println("Has Retirado $" + cash + " su nuevo saldo es $" + credito + "\n");
-                 break;
+                 if (cash < credito){
+                     credito -= cash;
+                     System.out.println("Has Retirado $" + cash + " su nuevo saldo es $" + credito + "\n");
+                     break;
+                 }else {
+                     System.out.println("Saldo insuficiente");
+                     break;
+                 }
              case 3:
                  System.out.println("¿Cuanto desea Depositar?");
                  cash = input.nextDouble();
